@@ -142,6 +142,9 @@ module ActsAsFavoritor
 
       # rubocop:disable Metrics/AbcSize
       def inc_cache(favoritable, scope)
+        self.favoritor_score = {} if favoritor_score.blank?
+        self.favoritor_total = {} if favoritor_total.blank?
+
         favoritor_score[scope] = (favoritor_score[scope] || 0) + 1
         favoritor_total[scope] = (favoritor_total[scope] || 0) + 1
         save!
@@ -154,6 +157,9 @@ module ActsAsFavoritor
       end
 
       def dec_cache(favoritable, scope)
+        self.favoritor_score = {} if favoritor_score.blank?
+        self.favoritor_total = {} if favoritor_total.blank?
+
         favoritor_score[scope] = (favoritor_score[scope] || 0) - 1
         favoritor_score.delete(scope) unless favoritor_score[scope].positive?
         save!
