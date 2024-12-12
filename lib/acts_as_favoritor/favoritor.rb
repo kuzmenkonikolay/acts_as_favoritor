@@ -149,6 +149,9 @@ module ActsAsFavoritor
         favoritor_total[scope] = (favoritor_total[scope] || 0) + 1
         save!
 
+        favoritable.favoritable_score = {} if favoritable.favoritable_score.blank?
+        favoritable.favoritable_total = {} if favoritable.favoritable_total.blank?
+
         favoritable.favoritable_score[scope] =
           (favoritable.favoritable_score[scope] || 0) + 1
         favoritable.favoritable_total[scope] =
@@ -163,6 +166,9 @@ module ActsAsFavoritor
         favoritor_score[scope] = (favoritor_score[scope] || 0) - 1
         favoritor_score.delete(scope) unless favoritor_score[scope].positive?
         save!
+
+        favoritable.favoritable_score = {} if favoritable.favoritable_score.blank?
+        favoritable.favoritable_total = {} if favoritable.favoritable_total.blank?
 
         favoritable.favoritable_score[scope] =
           (favoritable.favoritable_score[scope] || 0) - 1
